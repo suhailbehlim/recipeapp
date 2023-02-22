@@ -11,18 +11,28 @@ const Popular = () => {
   }, []);
 
   const getPopular = async () => {
+
+    const cheack = localStorage.getItem('popular');
+if(cheack){
+  setPopular(JSON.parse(cheack));
+}
+else{
     const api = await fetch(
       `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`
     );
     const data = await api.json();
-    console.log(data.recipes);
-    // setPopular(data.recipes);
+
+    localStorage.setItem("popular",JSON.stringify(data.recipes)
+    )
+    // console.log(data.recipes);
+    setPopular(data.recipes);
+}
   };
 
   return (
     <div>
       <Wrapper>
-        <h1>popular picks</h1>
+        <h1 style={{color:'red'}}>popular picks</h1>
 
         <Splide
           options={{
@@ -35,7 +45,7 @@ const Popular = () => {
         >
           {Popular.map((recipe) => {
             return (
-              <SplideSlide>
+              <SplideSlide key={recipe.id}>
                 <Card>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title} />
