@@ -36,7 +36,7 @@ else{
 
         <Splide
           options={{
-            perPage: 2,
+            perPage: 3,
             arrows: false,
             pagination: false,
             drag: "free",
